@@ -1,0 +1,65 @@
+﻿@model IEnumerable<M17E_N23.Models.UtilizadoresModel>
+
+@{
+    ViewBag.Title = "Gerir";
+}
+
+<h2>Gerir</h2>
+
+@if (Session["perfil"] != null && Session["perfil"].Equals(1))
+{
+    <p>
+        @Html.ActionLink("Adicionar", "Adicionar")
+    </p>
+
+}
+
+<form method="post" class="form-horizontal" id="form">
+    Pesquisar:<input type="text" name="nome" id="nome" class="form-control" />
+    <input type="submit" value="Pesquisar" class="btn" />
+</form>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.perfil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.perfil)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @if (Session["perfil"] != null && Session["perfil"].Equals(1))
+            {
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = item.nome }) |
+                @Html.ActionLink("Apagar", "Apagar", new { id = item.nome })
+            </td>
+            }
+        </td>
+    </tr>
+}
+
+</table>

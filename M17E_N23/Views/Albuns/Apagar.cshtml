@@ -1,0 +1,64 @@
+﻿@model M17E_N23.Models.AlbunsModel
+
+@{
+    ViewBag.Title = "Apagar";
+}
+
+<h2>Apagar</h2>
+
+<h3>Tem a certeza que quer apagar isto?</h3>
+<div>
+    <h4>Albuns</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ano)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ano)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.review)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.review)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.artista)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.artista)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.classificacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.classificacao)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Voltar à lista", "Index")
+        </div>
+    }
+</div>

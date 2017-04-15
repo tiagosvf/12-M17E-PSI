@@ -1,0 +1,73 @@
+﻿@model IEnumerable<M17E_N23.Models.AlbunsModel>
+
+@{
+    ViewBag.Title = "Albuns";
+}
+
+<h2>Albuns</h2>
+@if (Session["perfil"]!=null && (Session["perfil"].Equals(1) || Session["perfil"].Equals(2)))
+{
+    <p>
+        @Html.ActionLink("Adicionar", "Adicionar")
+    </p>
+
+}
+
+<form method="post" class="form-horizontal" id="form">
+    Pesquisar:<input type="text" name="nome" id="nome" class="form-control" />
+    <input type="submit" value="Pesquisar" class="btn" />
+  </form>
+<table class="table" id="Resultado">
+    <tr>
+        <th>
+           capa
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ano)
+        </th>
+     
+        <th>
+            @Html.DisplayNameFor(model => model.artista)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.classificacao)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Url.Content("~/Imagens/"+item.nr+".jpg")" alt="IMAGES" width="80" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ano)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.artista)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.classificacao)
+        </td>
+@if (Session["perfil"] != null &&  (Session["perfil"].Equals(1) || Session["perfil"].Equals(2)))
+{
+        <td>
+            @Html.ActionLink("Editar", "Editar", new { id = item.nr }) |           
+            @Html.ActionLink("Apagar", "Apagar", new { id = item.nr })
+        </td>
+}
+<td>
+    @Html.ActionLink("Review", "Reviews", new { id = item.nr }) 
+   
+</td>
+    </tr>
+}
+
+</table>

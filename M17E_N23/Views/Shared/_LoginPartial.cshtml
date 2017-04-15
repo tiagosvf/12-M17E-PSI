@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated && Session["nome"]!=null)
+{
+    using (Html.BeginForm("Index", "Logout", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+@if (Request.IsAuthenticated && Session["perfil"].Equals(1))
+{
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            @Html.DisplayName("Olá " + Session["nome"] + "!")
+             <span class="caret" aria-hidden="true"></span></a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Gerir comentários", "GerirComentarios", "Admin")</li>
+                <li>@Html.ActionLink("Gerir utilizadores", "Gerir", "Utilizadores")</li>
+                <li>@Html.ActionLink("Gerir álbuns", "Index", "Albuns")</li>
+               
+
+            </ul>
+        </li>
+}
+else if (Request.IsAuthenticated && Session["perfil"].Equals(2))
+{
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            @Html.DisplayName("Olá " + Session["nome"] + "!")
+            <span class="caret" aria-hidden="true"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink("Gerir comentários", "GerirComentarios", "Admin")</li>          
+            <li>@Html.ActionLink("Gerir álbuns", "Index", "Albuns")</li>
+        
+
+        </ul>
+    </li>
+}
+else
+{
+    <li>
+        @Html.ActionLink("Olá " + Session["nome"] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+}
+        <li>
+
+
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+      <!--  <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>-->
+        <li>@Html.ActionLink("Log in", "Index", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

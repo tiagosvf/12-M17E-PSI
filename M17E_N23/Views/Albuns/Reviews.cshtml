@@ -1,0 +1,145 @@
+﻿@model M17E_N23.Models.AlbunsModel
+
+@{
+    ViewBag.Title = "Reviews";
+}
+
+<h2>Reviews</h2>
+
+<div>
+    <h4>Albuns</h4>
+    <hr />
+
+
+    <dl class="dl-horizontal">
+        <dt>
+            capa
+        </dt>
+        <dd>
+            <img src="@Url.Content("~/Imagens/"+Model.nr+".jpg")" alt="IMAGES" width="200"/>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nome)
+        </dt>
+       
+        <dd>
+            @Html.DisplayFor(model => model.nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.artista)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.artista)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ano)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ano)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.review)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.review)
+        </dd>
+
+      @Html.HiddenFor(model => model.nr)
+
+        <dt>
+            @Html.DisplayNameFor(model => model.classificacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.classificacao)
+        </dd>
+
+    </dl>
+</div>
+<p>
+@if (Session["perfil"] != null && Session["perfil"].Equals(1))
+{
+    @Html.ActionLink("Editar ", "Editar", new { id = Model.nr }) 
+    
+                                                            }
+   | @Html.ActionLink("Voltar à lista", "Index")
+</p>
+<h2>Comentários</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+       
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("nome", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nome_comentador, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nome_comentador, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.comentario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.comentario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comentario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.nr);
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Adicionar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<table id="Resultado" class="table table-striped">
+    <th>Nome</th>
+    <th>Comentario</th>
+</table>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(function () {
+      //  $("#tbNome").keyup(function () {
+            $("#Resultado tr td").remove();
+            var nome = $("#nr").val();
+                //$("#tbNome").val();
+            var url = "..//ComentariosJson/"+nome;
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (dados) {
+                    if (dados.length == 0) {
+                        $("#Resultado").hide();  
+                        return;
+                    }
+                    for (var i = 0; i < dados.length; i++) {
+                        console.debug(dados[i]);                      
+                        var linha = '<tr><td>';
+                        linha += dados[i].nome + '</td><td>';
+                        linha += dados[i].comentario + '</td><td>';                       
+                        linha += '</td></tr>';
+                        $("#Resultado").append(linha);
+                    }
+                }
+            });
+     //   });
+    })
+</script>

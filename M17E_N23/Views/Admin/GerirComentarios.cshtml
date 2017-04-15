@@ -1,0 +1,61 @@
+﻿@model IEnumerable<M17E_N23.Models.AdminModel>
+
+@{
+    ViewBag.Title = "Gerir Comentarios";
+}
+
+<h2>Gerir Comentarios</h2>
+
+<form method="post" class="form-horizontal" id="form">
+    Pesquisar:<input type="text" name="comentario" id="comentario" class="form-control" />
+    <input type="submit" value="Pesquisar" class="btn" />
+</form>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+   
+        <th>
+            @Html.DisplayNameFor(model => model.album)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.comentario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aprovado)
+        </th>
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.album)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.comentario)
+        </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.aprovado)
+        </th>
+        <td>
+            @if (item.aprovado == false)
+            {
+            @Html.ActionLink("Aprovar", "Aprovar", new { id = item.nr }) 
+                                                                       }
+            else
+            {
+                @Html.ActionLink("Desaprovar", "Desaprovar", new { id = item.nr }) 
+            }
+         <!--   @Html.ActionLink("Details", "Details", new { id=item.nr }) |-->
+           | @Html.ActionLink("Apagar", "Apagar", new { id=item.nr })
+        </td>
+    </tr>
+}
+
+</table>

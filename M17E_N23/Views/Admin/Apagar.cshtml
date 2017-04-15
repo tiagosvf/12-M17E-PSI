@@ -1,0 +1,58 @@
+﻿@model M17E_N23.Models.AdminModel
+
+@{
+    ViewBag.Title = "Apagar";
+}
+
+
+
+<h2>Apagar</h2>
+
+<h3>Tem a certeza que deseja apagar isto?</h3>
+<div>
+    <h4>Comentário</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nome)
+        </dd>
+
+         <dt>
+            @Html.DisplayNameFor(model => model.album)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.album)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comentario)
+        </dd>
+
+           <dt>
+            @Html.DisplayNameFor(model => model.aprovado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aprovado)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Apagar" class="btn btn-default" /> |
+            @Html.ActionLink("Voltar à lista", "GerirComentarios")
+        </div>
+    }
+</div>
